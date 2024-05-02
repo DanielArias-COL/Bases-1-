@@ -15,7 +15,7 @@ CREATE SCHEMA IF NOT EXISTS `Banco` DEFAULT CHARACTER SET utf8 ;
 USE `Banco` ;
 
 -- -----------------------------------------------------
--- Table `Banco`.`Departamento`
+-- Table `Banco`.`Departamento`--hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Departamento` (
   `dep_id` INT NOT NULL,
@@ -57,7 +57,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Prioridad`
+-- Table `Banco`.`Prioridad` --hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Prioridad` (
   `prd_id` INT NOT NULL,
@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Municipio`
+-- Table `Banco`.`Municipio` --echo
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Municipio` (
   `mun_id` INT NOT NULL,
@@ -93,7 +93,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Cargo`
+-- Table `Banco`.`Cargo` --hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Cargo` (
   `carg_id` INT NOT NULL,
@@ -104,7 +104,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Empleado`
+-- Table `Banco`.`Empleado` --hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Empleado` (
   `emp_id` INT NOT NULL,
@@ -118,7 +118,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Sucursal`
+-- Table `Banco`.`Sucursal` --Hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Sucursal` (
   `suc_id` INT NOT NULL,
@@ -136,7 +136,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Contrato`
+-- Table `Banco`.`Contrato` -- Hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Contrato` (
   `contr_id` INT NOT NULL,
@@ -169,7 +169,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Banco`.`Profesion`
+-- Table `Banco`.`Profesion` --Hecho
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Banco`.`Profesion` (
   `prf_id` INT NOT NULL,

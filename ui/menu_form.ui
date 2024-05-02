@@ -30,11 +30,11 @@
     <addaction name="actionSucursal"/>
     <addaction name="btnAbrirVentanaEmpleado"/>
     <addaction name="btnAbrirVentanaDepartamento"/>
-    <addaction name="actionMunicipio"/>
-    <addaction name="actionCargo"/>
-    <addaction name="actionContrato"/>
-    <addaction name="actionProfesion"/>
-    <addaction name="actionFuncion"/>
+    <addaction name="btnAbrirVentanaMunicipio"/>
+    <addaction name="btnAbrirVentanaCargo"/>
+    <addaction name="btnAbrirVentanaContrato"/>
+    <addaction name="btnAbrirVentanaProfesion"/>
+    <addaction name="btnAbrirVentanaFuncion"/>
    </widget>
    <widget class="QMenu" name="menuTransacciones">
     <property name="title">
@@ -78,27 +78,27 @@
     <string>Departamento</string>
    </property>
   </action>
-  <action name="actionMunicipio">
+  <action name="btnAbrirVentanaMunicipio">
    <property name="text">
     <string>Municipio</string>
    </property>
   </action>
-  <action name="actionCargo">
+  <action name="btnAbrirVentanaCargo">
    <property name="text">
     <string>Cargo</string>
    </property>
   </action>
-  <action name="actionContrato">
+  <action name="btnAbrirVentanaContrato">
    <property name="text">
     <string>Contrato</string>
    </property>
   </action>
-  <action name="actionProfesion">
+  <action name="btnAbrirVentanaProfesion">
    <property name="text">
     <string>Profesion</string>
    </property>
   </action>
-  <action name="actionFuncion">
+  <action name="btnAbrirVentanaFuncion">
    <property name="text">
     <string>Funcion</string>
    </property>
