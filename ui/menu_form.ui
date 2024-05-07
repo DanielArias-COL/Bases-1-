@@ -13,7 +13,21 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>230</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Transacciones</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -27,34 +41,42 @@
     <property name="title">
      <string>Entidades</string>
     </property>
-    <addaction name="actionSucursal"/>
+    <addaction name="btnAbrirVentanaSucursal"/>
     <addaction name="btnAbrirVentanaEmpleado"/>
     <addaction name="btnAbrirVentanaDepartamento"/>
     <addaction name="btnAbrirVentanaMunicipio"/>
     <addaction name="btnAbrirVentanaCargo"/>
-    <addaction name="btnAbrirVentanaContrato"/>
     <addaction name="btnAbrirVentanaProfesion"/>
-    <addaction name="btnAbrirVentanaFuncion"/>
+    <addaction name="btnAbrirVentanaTipoMunicipio"/>
    </widget>
    <widget class="QMenu" name="menuTransacciones">
     <property name="title">
      <string>Transacciones</string>
     </property>
+    <addaction name="actionContratos"/>
    </widget>
    <widget class="QMenu" name="menuReportes_Consultas">
     <property name="title">
      <string>Reportes/Consultas</string>
     </property>
+    <addaction name="actionListar_sucursales"/>
+    <addaction name="actionInforme_Empleados"/>
    </widget>
    <widget class="QMenu" name="menuUtilidades">
     <property name="title">
      <string>Utilidades</string>
     </property>
+    <addaction name="actionUsuarios"/>
+    <addaction name="actionBit_cora_de_usuarios"/>
+    <addaction name="actionCalculadora"/>
+    <addaction name="actionFecha_y_Hora_Actual"/>
    </widget>
    <widget class="QMenu" name="menuAyudas">
     <property name="title">
      <string>Ayudas</string>
     </property>
+    <addaction name="actionAyuda_de_la_aplicaci_n"/>
+    <addaction name="actionAcerca_de"/>
    </widget>
    <addaction name="menuEntidades"/>
    <addaction name="menuTransacciones"/>
@@ -63,7 +85,7 @@
    <addaction name="menuAyudas"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionSucursal">
+  <action name="btnAbrirVentanaSucursal">
    <property name="text">
     <string>Sucursal</string>
    </property>
@@ -101,6 +123,56 @@
   <action name="btnAbrirVentanaFuncion">
    <property name="text">
     <string>Funcion</string>
+   </property>
+  </action>
+  <action name="actionContratos">
+   <property name="text">
+    <string>Contratos</string>
+   </property>
+  </action>
+  <action name="actionListar_sucursales">
+   <property name="text">
+    <string>Listar sucursales</string>
+   </property>
+  </action>
+  <action name="actionInforme_Empleados">
+   <property name="text">
+    <string>Informe Empleados</string>
+   </property>
+  </action>
+  <action name="actionUsuarios">
+   <property name="text">
+    <string>Usuarios</string>
+   </property>
+  </action>
+  <action name="actionBit_cora_de_usuarios">
+   <property name="text">
+    <string>Bitácora de usuarios</string>
+   </property>
+  </action>
+  <action name="actionCalculadora">
+   <property name="text">
+    <string>Calculadora</string>
+   </property>
+  </action>
+  <action name="actionFecha_y_Hora_Actual">
+   <property name="text">
+    <string>Fecha y Hora Actual</string>
+   </property>
+  </action>
+  <action name="actionAyuda_de_la_aplicaci_n">
+   <property name="text">
+    <string>Ayuda de la aplicación</string>
+   </property>
+  </action>
+  <action name="actionAcerca_de">
+   <property name="text">
+    <string>Acerca de ...</string>
+   </property>
+  </action>
+  <action name="btnAbrirVentanaTipoMunicipio">
+   <property name="text">
+    <string>Tipo Municipio</string>
    </property>
   </action>
  </widget>
