@@ -76,7 +76,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -146,9 +146,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>160</x>
       <y>0</y>
-      <width>241</width>
+      <width>261</width>
       <height>41</height>
      </rect>
     </property>
@@ -160,7 +160,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Detalle Contrato</string>
+     <string>Gestión de Contrato</string>
     </property>
    </widget>
   </widget>
@@ -277,27 +277,32 @@
     </attribute>
     <column>
      <property name="text">
-      <string>Codigo</string>
+      <string>Código</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Cedula</string>
+      <string>Fecha Inicio</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Nombre</string>
+      <string>Fecha Fin</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Direccion</string>
+      <string>código emp</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Telefono</string>
+      <string>código suc</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>código carg</string>
      </property>
     </column>
    </widget>

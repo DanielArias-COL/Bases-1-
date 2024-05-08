@@ -6,6 +6,8 @@ from ui.municipio import VentanaMunicipio
 from ui.sucursal import VentanaSucursal
 from ui.cargo import VentanaCargo
 from ui.profesion import VentanaProfesion
+from ui.contrato import VentanaContrato
+from ui.listaSuc import VentanaListaSuc
 
 class VentanaMenu(QMainWindow):
     def __init__(self):
@@ -21,3 +23,7 @@ class VentanaMenu(QMainWindow):
         self.ui.btnAbrirVentanaSucursal.triggered.connect(lambda: VentanaSucursal())
         self.ui.btnAbrirVentanaCargo.triggered.connect(lambda: VentanaCargo())
         self.ui.btnAbrirVentanaProfesion.triggered.connect(lambda: VentanaProfesion())
+        self.ui.btnAbrirVentanaContrato_2.triggered.connect(lambda: VentanaContrato())
+        self.ui.btnAbrirbtnAbrirVentanaListaDeSucursales.triggered.connect(lambda: VentanaListaSuc())
+        
+

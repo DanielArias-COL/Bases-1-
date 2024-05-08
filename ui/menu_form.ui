@@ -53,13 +53,13 @@
     <property name="title">
      <string>Transacciones</string>
     </property>
-    <addaction name="actionContratos"/>
+    <addaction name="btnAbrirVentanaContrato_2"/>
    </widget>
    <widget class="QMenu" name="menuReportes_Consultas">
     <property name="title">
      <string>Reportes/Consultas</string>
     </property>
-    <addaction name="actionListar_sucursales"/>
+    <addaction name="btnAbrirbtnAbrirVentanaListaDeSucursales"/>
     <addaction name="actionInforme_Empleados"/>
    </widget>
    <widget class="QMenu" name="menuUtilidades">
@@ -125,12 +125,12 @@
     <string>Funcion</string>
    </property>
   </action>
-  <action name="actionContratos">
+  <action name="btnAbrirVentanaContrato_2">
    <property name="text">
     <string>Contratos</string>
    </property>
   </action>
-  <action name="actionListar_sucursales">
+  <action name="btnAbrirbtnAbrirVentanaListaDeSucursales">
    <property name="text">
     <string>Listar sucursales</string>
    </property>
