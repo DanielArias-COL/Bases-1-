@@ -5,11 +5,16 @@ from date.empleadoDate import EmpleadoDate
 
 
 
+
 class VentanaEmpleado(QDialog):
-    def __init__(self):
+    def __init__(self, ventanaMenu):
         super().__init__()
         self.ui = uic.loadUi('ui\empleado_form.ui',self)
         #conectamos la UI a las variables de la clase.
+        self.ventana_menu= ventanaMenu
+        self.ventana_menu.hide()
+
+
         self.empleado_id = self.ui.lineEditCodigo
         self.empleado_cedula = self.ui.lineEditCedula
         self.empleado_nombre = self.ui.lineEditNombre
@@ -232,6 +237,7 @@ class VentanaEmpleado(QDialog):
             
     def regresar_atras(self):
         from ui.menu import VentanaMenu
+        self.ventana_menu.show()
         self.close()
-        ventana_menu = VentanaMenu()
-        pass        
+        
+               

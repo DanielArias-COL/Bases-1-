@@ -6,9 +6,12 @@ from date.contratoDate import ContratoDate
 
 
 class VentanaContrato(QDialog):
-    def __init__(self):
+    def __init__(self, ventanaMenu):
         super().__init__()
         self.ui = uic.loadUi('ui\contrato_form.ui',self)
+        self.ventana_menu= ventanaMenu
+        self.ventana_menu.hide()
+
         #conectamos la UI a las variables de la clase.
         self.contrato_id = self.ui.lineEditCodigo
         self.contrato_fecha_inicio = self.ui.lineEditFechaInicio
@@ -221,10 +224,10 @@ class VentanaContrato(QDialog):
             
     def actualizar_registro(self):
         # Function to update student information
-        new_contrato_info = self.obtener_empleado()
+        new_contrato_info = self.obtener_contrato()
 
         if new_contrato_info["contr_id"]:
-            update_result = self.empleado_date.actualizar_empleado(
+            update_result = self.contrato_date.actualizar_contrato(
                 contr_id=new_contrato_info["contr_id"],
                 fecha_inicio=new_contrato_info["fecha_inicio"],
                 fecha_fin=new_contrato_info["fecha_fin"],
@@ -247,6 +250,5 @@ class VentanaContrato(QDialog):
             
     def regresar_atras(self):
         from ui.menu import VentanaMenu
-        self.close()
-        ventana_menu = VentanaMenu()
-        pass        
+        self.ventana_menu.show()
+        self.close()    

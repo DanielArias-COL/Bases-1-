@@ -28,6 +28,62 @@ class SucursalDate():
             # Cerrar la conexión con la base de datos en cualquier caso
             connection.disconnect()
     
+
+    
+    def sucursales_munImportate(self):
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = ("select s.mun_id, s.nombre, s.presupuesto_anual, s.mun_id nombre from sucursal s "
+         "INNER JOIN municipio m ON s.mun_id = m.mun_id "
+         "INNER JOIN prioridad p ON m.prd_id = p.prd_id "
+         "where p.nombre = 'Importante'")
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
+
+    def sucursales_munMedellin(self):
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = ("select s.mun_id, s.nombre, s.presupuesto_anual, s.mun_id nombre from sucursal s " 
+                 "JOIN municipio m ON s.mun_id = m.mun_id "  
+                    "where m.nombre = 'Medellín'")
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
+
+
     def agregar_sucursal(self, suc_id, nombre, presupuesto_anual, mun_id):
 
         connection = MySQLConnection()

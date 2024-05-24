@@ -9,19 +9,17 @@ from ui.profesion import VentanaProfesion
 from ui.contrato import VentanaContrato
 from ui.listaSuc import VentanaListaSuc
 from ui.reporte import VentanaGestorInformes
-from ui.usuario import VentanaUsuario
 from date.bitacoraUsuarioDate import BitacoraUsuarioDate
-from ui.bitacora import VentanaBitacora
-from ui.consulta_principal import VentanaConsultaPrincipal
+from ui.consulta_parametrico import VentanaConsultaParametrico
 
 
 
-class VentanaMenu(QMainWindow):
+class VentanaMenuParametrico(QMainWindow):
     def __init__(self,usuario_id = None, nivel_usuario = None):
         super().__init__()
         self.usuario_id= usuario_id
         self.nivel_usuario = nivel_usuario
-        self.ui = uic.loadUi('ui/menu_form.ui',self)
+        self.ui = uic.loadUi('ui/menu_form_parametrico.ui',self)
         self.initGUI()
         self.bitacora_Date= BitacoraUsuarioDate()
         self.fecha_ingreso = self.bitacora_Date.obtener_fecha()
@@ -37,9 +35,7 @@ class VentanaMenu(QMainWindow):
         self.ui.btnAbrirVentanaContrato_2.triggered.connect(lambda: VentanaContrato(self))
         self.ui.btnAbrirbtnAbrirVentanaListaDeSucursales.triggered.connect(lambda: self.ventanaListaSuc())
         self.ui.btnAbrirbtnAbrirInformes.triggered.connect(lambda: self.ventanaInformes())
-        self.ui.btnAbrirUsuarios.triggered.connect(lambda: VentanaUsuario(self))
-        self.ui.btnAbrirBitacoras.triggered.connect(lambda: VentanaBitacora(self))
-        self.ui.btnAbrirConsultas.triggered.connect(lambda: VentanaConsultaPrincipal(self))
+        self.ui.btnAbrirConsultas.triggered.connect(lambda: VentanaConsultaParametrico(self))
         
 
 
@@ -63,6 +59,8 @@ class VentanaMenu(QMainWindow):
         self.btnCerrarSesion.clicked.connect(self.cerrarSesion)
 
 
+   
+            
     def cerrarSesion(self):
         from ui.login import Login
         self.agregar_bitacora(self.fecha_ingreso, self.usuario_id)

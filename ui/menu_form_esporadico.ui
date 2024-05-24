@@ -66,38 +66,12 @@ border-radius: 8px;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(217, 217, 216);</string>
    </property>
-   <widget class="QMenu" name="menuEntidades">
-    <property name="title">
-     <string>Entidades</string>
-    </property>
-    <addaction name="btnAbrirVentanaSucursal"/>
-    <addaction name="btnAbrirVentanaEmpleado"/>
-    <addaction name="btnAbrirVentanaDepartamento"/>
-    <addaction name="btnAbrirVentanaMunicipio"/>
-    <addaction name="btnAbrirVentanaCargo"/>
-    <addaction name="btnAbrirVentanaProfesion"/>
-    <addaction name="btnAbrirVentanaTipoMunicipio"/>
-   </widget>
-   <widget class="QMenu" name="menuTransacciones">
-    <property name="title">
-     <string>Transacciones</string>
-    </property>
-    <addaction name="btnAbrirVentanaContrato_2"/>
-   </widget>
    <widget class="QMenu" name="menuReportes_Consultas">
     <property name="title">
      <string>Reportes/Consultas</string>
     </property>
-    <addaction name="btnAbrirbtnAbrirVentanaListaDeSucursales"/>
     <addaction name="btnAbrirbtnAbrirInformes"/>
     <addaction name="btnAbrirConsultas"/>
-   </widget>
-   <widget class="QMenu" name="menuUtilidades">
-    <property name="title">
-     <string>Utilidades</string>
-    </property>
-    <addaction name="btnAbrirUsuarios"/>
-    <addaction name="btnAbrirBitacoras"/>
    </widget>
    <widget class="QMenu" name="menuAyudas">
     <property name="title">
@@ -106,10 +80,7 @@ border-radius: 8px;</string>
     <addaction name="btnAbrirAyudaApp"/>
     <addaction name="btnAbrirAcercaDe"/>
    </widget>
-   <addaction name="menuEntidades"/>
-   <addaction name="menuTransacciones"/>
    <addaction name="menuReportes_Consultas"/>
-   <addaction name="menuUtilidades"/>
    <addaction name="menuAyudas"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

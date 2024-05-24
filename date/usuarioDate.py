@@ -2,24 +2,22 @@ from date.connection import MySQLConnection
 
 
 #Esta clase me permite hacer todas las consultas a la base de datos que tengan que ver con el empleado
-class ContratoDate():
+class UsuarioDate():
     
 
-    def empleados_por_departamento(self):
-            # Crear una instancia de MySQLConnection y establecer la conexión
+    def lista_auditoria_por_usuario(self):
         connection = MySQLConnection()
         connection.connect()
 
         # Construir la consulta SQL utilizando el ID del empleado proporcionado
         query = (
-            "SELECT d.nombre AS departamento, COUNT(e.emp_id) AS cantidad_empleados "
-            "FROM Departamento d "
-            "LEFT JOIN Municipio m ON d.dep_id = m.dep_id "
-            "LEFT JOIN Sucursal s ON m.mun_id = s.mun_id "
-            "LEFT JOIN Contrato c ON s.suc_id = c.suc_id "
-            "LEFT JOIN Empleado e ON c.emp_id = e.emp_id "
-            "GROUP BY d.nombre"
-        )
+        "SELECT u.nombre_alternativo AS usuario, "
+        "COUNT(CASE WHEN ae.fecha_salida IS NULL THEN 1 END) AS auditorias_entrada, "
+        "COUNT(CASE WHEN ae.fecha_salida IS NOT NULL THEN 1 END) AS auditorias_salida "
+        "FROM Usuario u "
+        "LEFT JOIN AuditoriaES ae ON u.usr_id = ae.usr_id "
+        "GROUP BY u.nombre_alternativo"
+)
 
 
         try:
@@ -36,15 +34,40 @@ class ContratoDate():
         finally:
             # Cerrar la conexión con la base de datos en cualquier caso
             connection.disconnect()
-        
     
-    def buscar_contrato(self, contrato_id):
+
+
+
+    def obtener_usuario_nombre(self, nombre):
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = f"SELECT * FROM usuario WHERE nombre_alternativo = '{nombre}'"
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
+    
+
+    def buscar_usuario(self, usuario_id):
         # Crear una instancia de MySQLConnection y establecer la conexión
         connection = MySQLConnection()
         connection.connect()
 
         # Construir la consulta SQL utilizando el ID del empleado proporcionado
-        query = f"SELECT * FROM contrato WHERE contrato_id = {contrato_id}"
+        query = f"SELECT * FROM usuario WHERE usr_id = {usuario_id}"
 
         try:
 
@@ -61,15 +84,15 @@ class ContratoDate():
             # Cerrar la conexión con la base de datos en cualquier caso
             connection.disconnect()
     
-    def agregar_contrato(self, contr_id, fecha_inicio, fecha_fin, emp_id, suc_id, carg_id):
+    def agregar_usuario(self, usr_id, nombre_alternativo, clave, nivel_usuario):
 
         connection = MySQLConnection()
         connection.connect()
 
         # Construir la consulta SQL utilizando el ID del empleado proporcionado
         query = f"""
-            INSERT INTO contrato (contr_id, fecha_inicio, fecha_fin, emp_id, suc_id, carg_id) 
-	            VALUES ({contr_id}, '{fecha_inicio}', '{fecha_fin}', '{emp_id}', '{suc_id}', '{carg_id}');
+            INSERT INTO usuario (usr_id, nombre_alternativo, clave, nivel_usuario) 
+	            VALUES ('{usr_id}', '{nombre_alternativo}', '{clave}', '{nivel_usuario}');
         """
         try:
             # Ejecutar la consulta SQL utilizando la conexión establecida
@@ -84,13 +107,13 @@ class ContratoDate():
             # Cerrar la conexión con la base de datos en cualquier caso
             connection.disconnect()
 
-    def eliminar_contrato(self,contrato_id):
+    def eliminar_usuario(self,usuario_id):
         # Crear una instancia de MySQLConnection y establecer la conexión
         connection = MySQLConnection()
         connection.connect()
 
         # Construir la consulta SQL utilizando el ID del empleado proporcionado
-        query = f"delete from contrato where contr_id = {contrato_id};"
+        query = f"delete from usuario where usr_id = {usuario_id};"
         
 
         try:
@@ -110,16 +133,16 @@ class ContratoDate():
             connection.disconnect()
 
 
-    def actualizar_contrato(self, contr_id, fecha_inicio, fecha_fin, emp_id, suc_id, carg_id):
+    def actualizar_usuario(self, usr_id, nombre_alternativo, clave, nivel_usuario):
 
         connection = MySQLConnection()
         connection.connect()
 
         # Construir la consulta SQL utilizando el ID del empleado proporcionado
         query = f"""
-            UPDATE contrato
-                SET fecha_inicio='{fecha_inicio}', fecha_fin='{fecha_fin}', emp_id='{emp_id}', suc_id='{suc_id}', carg_id='{carg_id}'
-                WHERE contr_id={contr_id};
+            UPDATE usuario
+                SET nombre_alternativo='{nombre_alternativo}', clave='{clave}', nivel_usuario='{nivel_usuario}'
+                WHERE usr_id={usr_id};
         """
 
         try:
@@ -135,7 +158,7 @@ class ContratoDate():
             # Cerrar la conexión con la base de datos en cualquier caso
             connection.disconnect()
 
-    def buscar_informacion(self, contr_id=None, fecha_inicio=None, fecha_fin=None, emp_id=None, suc_id=None, carg_id=None):
+    def buscar_informacion(self, usr_id=None, nombre_alternativo=None, clave=None, nivel_usuario=None):
         #Esta funcion me permite buscar un empleado específico, o si estan llenos los parámetros de 
         #busqueda simplemente devuelve todos los empleados
         
@@ -143,53 +166,45 @@ class ContratoDate():
         connection.connect()
 
         condition = ""
-        if contr_id:
-            condition += f"contr_id LIKE '%{contr_id}%'"
+        if usr_id:
+            condition += f"usr_id LIKE '%{usr_id}%'"
         else:
-            if fecha_inicio:
+            if nombre_alternativo:
                 if condition:
-                    condition += f" and fecha_inicio LIKE '%{fecha_inicio}%'"
+                    condition += f" and nombre_alternativo LIKE '%{nombre_alternativo}%'"
                 else:
-                    condition += f"fecha_inicio LIKE '%{fecha_inicio}%'"
+                    condition += f"nombre_alternativo LIKE '%{nombre_alternativo}%'"
 
-            if fecha_fin:
+            if clave:
                 if condition:
-                    condition += f" and fecha_fin LIKE '%{fecha_fin}%'"
+                    condition += f" and clave LIKE '%{clave}%'"
                 else:
-                    condition += f"fecha_fin LIKE '%{fecha_fin}%'"
+                    condition += f"clave LIKE '%{clave}%'"
 
-            if emp_id:
+            if nivel_usuario != "Seleccionar":
                 if condition:
-                    condition += f" and emp_id LIKE '%{emp_id}%'"
+                    condition += f" and nivel_usuario LIKE '%{nivel_usuario}%'"
                 else:
-                    condition += f"emp_id LIKE '%{emp_id}%'"
+                    condition += f"nivel_usuario LIKE '%{nivel_usuario}%'"
 
-            if suc_id:
-                if condition:
-                    condition += f"  and suc_id LIKE '%{suc_id}%'"
-                else:
-                    condition += f"suc_id LIKE '%{suc_id}%'"
-
-            if carg_id:
-                if condition:
-                    condition += f"  and carg_id LIKE '%{carg_id}%'"
-                else:
-                    condition += f"carg_id LIKE '%{carg_id}%'"
+           
 
 
         if condition:
             # Construct SQL query for searching information with conditions
             query = f"""
-                SELECT * FROM contrato WHERE {condition};
+                SELECT * FROM usuario WHERE {condition};
             """
         else:
             # Construct SQL query for searching all information
             query = f"""
-                SELECT * FROM contrato;
+                SELECT * FROM usuario;
              """
 
         try:
             # Execute the SQL query for searching information
+            #self.cursor.execute(sql)
+            #result = self.cursor.fetchall()
             result = connection.execute_query(query)
             return result
 

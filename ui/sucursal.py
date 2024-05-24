@@ -6,9 +6,14 @@ from date.sucursalDate import SucursalDate
 
 
 class VentanaSucursal(QDialog):
-    def __init__(self):
+    def __init__(self, ventanaMenu):
         super().__init__()
         self.ui = uic.loadUi('ui\sucursal_form.ui',self)
+        self.ventana_menu= ventanaMenu
+        self.ventana_menu.hide()
+
+
+
         #conectamos la UI a las variables de la clase.
         self.sucursal_id = self.ui.lineEditCodigo
         self.sucursal_nombre = self.ui.lineEditNombre
@@ -228,6 +233,6 @@ class VentanaSucursal(QDialog):
             
     def regresar_atras(self):
         from ui.menu import VentanaMenu
+        self.ventana_menu.show()
         self.close()
-        ventana_menu = VentanaMenu()
-        pass        
+                

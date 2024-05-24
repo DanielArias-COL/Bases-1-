@@ -92,13 +92,6 @@ border-radius: 8px;</string>
     <addaction name="btnAbrirbtnAbrirInformes"/>
     <addaction name="btnAbrirConsultas"/>
    </widget>
-   <widget class="QMenu" name="menuUtilidades">
-    <property name="title">
-     <string>Utilidades</string>
-    </property>
-    <addaction name="btnAbrirUsuarios"/>
-    <addaction name="btnAbrirBitacoras"/>
-   </widget>
    <widget class="QMenu" name="menuAyudas">
     <property name="title">
      <string>Ayudas</string>
@@ -109,7 +102,6 @@ border-radius: 8px;</string>
    <addaction name="menuEntidades"/>
    <addaction name="menuTransacciones"/>
    <addaction name="menuReportes_Consultas"/>
-   <addaction name="menuUtilidades"/>
    <addaction name="menuAyudas"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

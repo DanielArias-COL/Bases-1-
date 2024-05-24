@@ -1,20 +1,19 @@
 from PyQt6 import uic 
 
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QPushButton, QMessageBox
-from date.listaSucDate import ListaSucDate
+from date.bitacoraUsuarioDate import BitacoraUsuarioDate
 
 
 
-class VentanaListaSuc(QDialog):
+class VentanaBitacora(QDialog):
     def __init__(self, ventanaMenu):
         super().__init__()
-        self.ui = uic.loadUi('ui\lista_sucursales_form.ui',self)
+        self.ui = uic.loadUi('ui/bitacora_usuario_form.ui',self)
+        #conectamos la UI a las variables de la clase.
         self.ventana_menu= ventanaMenu
         self.ventana_menu.hide()
 
-
-        #conectamos la UI a las variables de la clase.
-        self.sucursal_id = self.ui.lineEditCodigo
+        self.bitacora_id = self.ui.lineEditCodigo
         
 
         self.result_table = self.ui.tableWidget
@@ -24,7 +23,8 @@ class VentanaListaSuc(QDialog):
         # Initialize signal-slot connections
         self.init_signal_slot()
         #intancia que me permite hacer las Querys a Base de Datos
-        self.listaSuc_date = ListaSucDate()
+        self.bitacora_date = BitacoraUsuarioDate()
+        
         self.buscar_registro()
         self.ui.show()
 
@@ -50,9 +50,9 @@ class VentanaListaSuc(QDialog):
     
     def buscar_registro(self):
         # Function to search for student information and populate the table
-        sucursal_id =  self.sucursal_id.text().strip()
+        bitacora_id =  self.bitacora_id.text().strip()
    
-        search_result = self.listaSuc_date.buscar_informacion(sucursal_id)
+        search_result = self.bitacora_date.buscar_informacion(bitacora_id)
 
         #result = self.empleado_date.consultarEmpleados_tabla()
         self.mostrar_info_tabla(search_result)
@@ -60,7 +60,7 @@ class VentanaListaSuc(QDialog):
     def limpiar_formulario(self):
         # Función que limpia el formulario
     
-        self.sucursal_id.clear()
+        self.bitacora_id.clear()
         
         
         #se actualiza la tabla
@@ -69,7 +69,7 @@ class VentanaListaSuc(QDialog):
         
         
 
-    def verificar_empleado_id(self, id):
+    def verificar_bitacora_id(self, id):
         # Función que verifica si un empleado ya existe
         result = self.empleado_date.buscar_empleado(empleado_id=id)
         return result
@@ -121,4 +121,4 @@ class VentanaListaSuc(QDialog):
     def regresar_atras(self):
         from ui.menu import VentanaMenu
         self.ventana_menu.show()
-        self.close()        
+        self.close()    

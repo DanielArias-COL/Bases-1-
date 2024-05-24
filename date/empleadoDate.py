@@ -4,8 +4,138 @@ from date.connection import MySQLConnection
 
 #Esta clase me permite hacer todas las consultas a la base de datos que tengan que ver con el empleado
 class EmpleadoDate():
+
+    def empleados_de_medellin(self):
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = (
+        "SELECT e.emp_id, e.cedula, e.nombre, e.direccion, e.telefono, s.nombre AS sucursal, m.nombre AS municipio "
+        "FROM Empleado e "
+        "INNER JOIN Contrato c ON e.emp_id = c.emp_id "
+        "INNER JOIN Sucursal s ON c.suc_id = s.suc_id "
+        "INNER JOIN Municipio m ON s.mun_id = m.mun_id "
+        "WHERE m.nombre = 'Medellín'"
+        )
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
+    def cantidad_empleados_por_profesion(self): 
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = (
+            "SELECT p.nombre AS profesion, "
+            "COUNT(dep.emp_id) AS cantidad_empleados "
+            "FROM Profesion p "
+            "LEFT JOIN Detalle_Empleado_Profesion dep ON p.prf_id = dep.prf_id "
+            "GROUP BY p.nombre"
+        )
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+               
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
     
+
+
+    def emplados_por_departamento(self):
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = (
+        "SELECT d.nombre AS departamento, "
+        "COUNT(e.emp_id) AS cantidad_empleados "
+        "FROM Departamento d "
+        "LEFT JOIN Municipio m ON d.dep_id = m.dep_id "
+        "LEFT JOIN Sucursal s ON m.mun_id = s.mun_id "
+        "LEFT JOIN Contrato c ON s.suc_id = c.suc_id "
+        "LEFT JOIN Empleado e ON c.emp_id = e.emp_id "
+        "GROUP BY d.nombre"
+        )
+
+
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
     
+
+
+    
+    def clasificar_por_profesion(self, profesion):
+        # Crear una instancia de MySQLConnection y establecer la conexión
+        connection = MySQLConnection()
+        connection.connect()
+
+        # Construir la consulta SQL utilizando el ID del empleado proporcionado
+        query = f"SELECT e.emp_id, e.cedula, e.nombre, e.direccion, e.telefono FROM empleado e \
+          INNER JOIN  detalle_empleado_profesion dep \
+          ON e.emp_id = dep.emp_id \
+          INNER JOIN  profesion p \
+          ON p.prf_id = dep.prf_id \
+          WHERE p.nombre = '{profesion}'"
+
+
+
+        try:
+
+            result = connection.execute_query(query)
+            return result
+
+        except Exception as E:
+
+            print("entra a el error")
+            return E
+        
+                
+        finally:
+            # Cerrar la conexión con la base de datos en cualquier caso
+            connection.disconnect()
+    
+
+
     def buscar_empleado(self, empleado_id):
         # Crear una instancia de MySQLConnection y establecer la conexión
         connection = MySQLConnection()

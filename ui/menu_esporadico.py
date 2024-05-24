@@ -1,45 +1,26 @@
 from PyQt6 import uic
 from PyQt6.QtWidgets import QMainWindow, QMessageBox
-from ui.empleado import VentanaEmpleado
-from ui.departamento import VentanaDepartamento
-from ui.municipio import VentanaMunicipio
-from ui.sucursal import VentanaSucursal
-from ui.cargo import VentanaCargo
-from ui.profesion import VentanaProfesion
-from ui.contrato import VentanaContrato
 from ui.listaSuc import VentanaListaSuc
 from ui.reporte import VentanaGestorInformes
-from ui.usuario import VentanaUsuario
 from date.bitacoraUsuarioDate import BitacoraUsuarioDate
-from ui.bitacora import VentanaBitacora
-from ui.consulta_principal import VentanaConsultaPrincipal
+from ui.consulta_esporadico import VentanaConsultaEsporadico
 
 
 
-class VentanaMenu(QMainWindow):
+class VentanaMenuEsporadico(QMainWindow):
     def __init__(self,usuario_id = None, nivel_usuario = None):
         super().__init__()
         self.usuario_id= usuario_id
         self.nivel_usuario = nivel_usuario
-        self.ui = uic.loadUi('ui/menu_form.ui',self)
+        self.ui = uic.loadUi('ui/menu_form_esporadico.ui',self)
         self.initGUI()
         self.bitacora_Date= BitacoraUsuarioDate()
         self.fecha_ingreso = self.bitacora_Date.obtener_fecha()
         self.ui.show()
 
     def initGUI(self):
-        self.ui.btnAbrirVentanaEmpleado.triggered.connect(lambda: VentanaEmpleado(self))
-        self.ui.btnAbrirVentanaDepartamento.triggered.connect(lambda: VentanaDepartamento(self))
-        self.ui.btnAbrirVentanaMunicipio.triggered.connect(lambda: VentanaMunicipio(self))
-        self.ui.btnAbrirVentanaSucursal.triggered.connect(lambda: VentanaSucursal(self))
-        self.ui.btnAbrirVentanaCargo.triggered.connect(lambda: VentanaCargo(self))
-        self.ui.btnAbrirVentanaProfesion.triggered.connect(lambda: VentanaProfesion(self))
-        self.ui.btnAbrirVentanaContrato_2.triggered.connect(lambda: VentanaContrato(self))
-        self.ui.btnAbrirbtnAbrirVentanaListaDeSucursales.triggered.connect(lambda: self.ventanaListaSuc())
         self.ui.btnAbrirbtnAbrirInformes.triggered.connect(lambda: self.ventanaInformes())
-        self.ui.btnAbrirUsuarios.triggered.connect(lambda: VentanaUsuario(self))
-        self.ui.btnAbrirBitacoras.triggered.connect(lambda: VentanaBitacora(self))
-        self.ui.btnAbrirConsultas.triggered.connect(lambda: VentanaConsultaPrincipal(self))
+        self.ui.btnAbrirConsultas.triggered.connect(lambda: VentanaConsultaEsporadico(self))
         
 
 
@@ -62,6 +43,10 @@ class VentanaMenu(QMainWindow):
 
         self.btnCerrarSesion.clicked.connect(self.cerrarSesion)
 
+
+        
+
+          
 
     def cerrarSesion(self):
         from ui.login import Login

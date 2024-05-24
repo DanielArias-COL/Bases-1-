@@ -1,23 +1,24 @@
 from PyQt6 import uic 
 
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QPushButton, QMessageBox
-from date.municipioDate import MunicipioDate
+from date.usuarioDate import UsuarioDate
 
 
 
-class VentanaMunicipio(QDialog):
+class VentanaUsuario(QDialog):
     def __init__(self, ventanaMenu):
         super().__init__()
-        self.ui = uic.loadUi('ui\municipio_form.ui',self)
+        self.ui = uic.loadUi('ui/usuario_form.ui',self)
+        #conectamos la UI a las variables de la clase.
         self.ventana_menu= ventanaMenu
         self.ventana_menu.hide()
 
-        #conectamos la UI a las variables de la clase.
-        self.municipio_id = self.ui.lineEditCodigo
-        self.municipio_nombre = self.ui.lineEditNombre
-        self.municipio_poblacion = self.ui.lineEditPoblacion
-        self.municipio_DepartamentoId = self.ui.lineEditDepartamentoId
-        self.municipio_PrioridadId = self.ui.lineEditPrioridadId
+
+        self.usuario_codigoEmp = self.ui.lineEditCodigoEmpleado
+        self.usuario_nombreAlt = self.ui.lineEditNombreAlt
+        self.usuario_clave = self.ui.lineEditClave
+        self.usuario_nivel = self.ui.comboBoxNivelUsuario
+        
 
         self.result_table = self.ui.tableWidget
         self.result_table.setSortingEnabled(False)
@@ -26,7 +27,7 @@ class VentanaMunicipio(QDialog):
         # Initialize signal-slot connections
         self.init_signal_slot()
         #intancia que me permite hacer las Querys a Base de Datos
-        self.municipio_date = MunicipioDate()
+        self.usuario_date = UsuarioDate()
         self.buscar_registro()
         self.ui.show()
 
@@ -56,26 +57,26 @@ class VentanaMunicipio(QDialog):
         # Función que agrega al empleado a la base de datos
         self.desactivar_botones()
 
-        municipio_info = self.obtener_municipio()
+        usuario_info = self.obtener_usuario()
 
-        if municipio_info["Id"] and municipio_info["Nombre"] and municipio_info["Poblacion"] and municipio_info["dep_id"] and municipio_info["prd_id"] :
-            check_result = self.verificar_municipio_id(int(municipio_info["Id"]))
+        if usuario_info["usr_id"] and usuario_info["nombre_alternativo"] and usuario_info["clave"] and usuario_info["nivel_usuario"] :
+            check_result = self.verificar_usuario_id(int(usuario_info["usr_id"]))
 
             
             if check_result:
-                QMessageBox.information(self, "Warning", "Por favor ingrese un nuevo código para el empleado",
+                QMessageBox.information(self, "Warning", "Por favor ingrese un nuevo código para el usuario",
                                         QMessageBox.StandardButton.Ok)
                 self.activar_botones()
                 return
             
+            
 
-
-            add_result = self.municipio_date.agregar_municipio(int(municipio_info["Id"]),
-                                                       municipio_info["Nombre"],
-                                                       int(municipio_info["Poblacion"]),
-                                                       int(municipio_info["dep_id"]),
-                                                       int(municipio_info["prd_id"]))
-                                          
+            add_result = self.usuario_date.agregar_usuario(int(usuario_info["usr_id"]),
+                                                       usuario_info["nombre_alternativo"],
+                                                       int(usuario_info["clave"]),
+                                                       usuario_info["nivel_usuario"])
+            self.limpiar_formulario()         
+            self.buscar_registro()
 
             if add_result:
                 QMessageBox.information(self, "Warning", f"Add fail: {add_result}, Please try again.",
@@ -84,20 +85,19 @@ class VentanaMunicipio(QDialog):
         else:
             QMessageBox.information(self, "Warning", "Please input student ID and first name.",
                                     QMessageBox.StandardButton.Ok)
-        self.limpiar_formulario()
-        self.buscar_registro()
+
+        
         self.activar_botones()
 
     def buscar_registro(self):
         # Function to search for student information and populate the table
-        municipio_info = self.obtener_municipio()
+        empleado_info = self.obtener_usuario()
 
-        search_result = self.municipio_date.buscar_informacion(
-            id=municipio_info["Id"],
-            nombre=municipio_info["Nombre"],
-            poblacion=municipio_info["Poblacion"],
-            dep_id=municipio_info["dep_id"],
-            prd_id=municipio_info["prd_id"]
+        search_result = self.usuario_date.buscar_informacion(
+            usr_id=empleado_info["usr_id"],
+            nombre_alternativo=empleado_info["nombre_alternativo"],
+            clave=empleado_info["clave"],
+            nivel_usuario=empleado_info["nivel_usuario"]
         )
 
         #result = self.empleado_date.consultarEmpleados_tabla()
@@ -105,41 +105,40 @@ class VentanaMunicipio(QDialog):
    
     def limpiar_formulario(self):
         # Función que limpia el formulario
-        self.municipio_id.setEnabled(True)
-        self.municipio_id.clear()
-        self.municipio_nombre.clear()
-        self.municipio_poblacion.clear()
-        self.municipio_DepartamentoId.clear()
-        self.municipio_PrioridadId.clear()
+        self.usuario_codigoEmp.setEnabled(True)
+        self.usuario_codigoEmp.clear()
+        self.usuario_nombreAlt.clear()
+        self.usuario_clave.clear()
+        self.usuario_nivel.setCurrentIndex(0)
+        
+        
         #se actualiza la tabla
         self.buscar_registro()
         
         
         
 
-    def verificar_municipio_id(self, id):
+    def verificar_usuario_id(self, id):
         # Función que verifica si un empleado ya existe
-        result = self.municipio_date.buscar_municipio(municipio_id=id)
+        result = self.usuario_date.buscar_usuario(usuario_id=id)
         return result
 
-    def obtener_municipio(self):
+    def obtener_usuario(self):
         # Funcion que devuelve el empleado del formulario
-        municipio_id = self.municipio_id.text().strip()
-        nombre = self.municipio_nombre.text().strip()
-        poblacion = self.municipio_poblacion.text().strip()
-        DepartamentoId = self.municipio_DepartamentoId.text().strip()
-        PrioridadId = self.municipio_PrioridadId.text().strip()
+        codigo = self.usuario_codigoEmp.text().strip()
+        nombreAlt = self.usuario_nombreAlt.text().strip()
+        clave = self.usuario_clave.text().strip()
+        nivel = self.usuario_nivel.currentText()
         
 
-        municipio_info = {
-            "Id": municipio_id,
-            "Nombre": nombre,
-            "Poblacion": poblacion,
-            "dep_id": DepartamentoId,
-            "prd_id": PrioridadId,
+        usuario_info = {
+            "usr_id": codigo,
+            "nombre_alternativo": nombreAlt,
+            "clave": clave,
+            "nivel_usuario": nivel
         }
 
-        return municipio_info
+        return usuario_info
     
     def mostrar_info_tabla(self, result):
         # Function to populate the table with student information
@@ -163,19 +162,25 @@ class VentanaMunicipio(QDialog):
     def seleccionar_registro(self):
         select_row = self.result_table.currentRow()
         if select_row != -1:
-            self.municipio_id.setEnabled(False)
-            
-            municipio_id = self.result_table.item(select_row, 0).text().strip()
+
+            self.usuario_codigoEmp.setEnabled(False)
+            codigo = self.result_table.item(select_row, 0).text().strip()
             nombre = self.result_table.item(select_row, 1).text().strip()
-            cantidad_poblacion = self.result_table.item(select_row, 2).text().strip()
-            dep_id = self.result_table.item(select_row, 4).text().strip()
-            prd_id = self.result_table.item(select_row, 3).text().strip()
+            clave = self.result_table.item(select_row, 2).text().strip()
+            nivel = self.result_table.item(select_row, 3).text().strip()
            
-            self.municipio_id.setText(municipio_id)
-            self.municipio_nombre.setText(nombre)
-            self.municipio_poblacion.setText(cantidad_poblacion)
-            self.municipio_DepartamentoId.setText(dep_id)
-            self.municipio_PrioridadId.setText(prd_id)
+            print(nivel)
+            self.usuario_codigoEmp.setText(codigo)
+            self.usuario_nombreAlt.setText(nombre)
+            self.usuario_clave.setText(clave)
+            
+            if nivel == "Principal":
+                self.usuario_nivel.setCurrentIndex(1)
+            if nivel == "Paramétrico":
+                self.usuario_nivel.setCurrentIndex(2)
+            if nivel == "Esporádico":
+                self.usuario_nivel.setCurrentIndex(3)
+
 
         else:
             QMessageBox.information(self, "Warning", "Please select one student information",
@@ -191,9 +196,9 @@ class VentanaMunicipio(QDialog):
 
             if selected_option == QMessageBox.StandardButton.Yes:
                 
-                municipio_id = self.result_table.item(select_row, 0).text().strip()
+                usuario_id = self.result_table.item(select_row, 0).text().strip()
                 #se elimina y se actualiza la tabla
-                delete_result = self.municipio_date.eliminar_municipio(municipio_id)
+                delete_result = self.usuario_date.eliminar_usuario(usuario_id)
                 self.limpiar_formulario()
                 self.buscar_registro()
                 
@@ -211,15 +216,14 @@ class VentanaMunicipio(QDialog):
             
     def actualizar_registro(self):
         # Function to update student information
-        new_municipio_info = self.obtener_municipio()
+        new_usuario_info = self.obtener_usuario()
 
-        if new_municipio_info["Id"]:
-            update_result = self.municipio_date.actualizar_municipio(
-                id=new_municipio_info["Id"],
-                nombre=new_municipio_info["Nombre"],
-                cantidad_poblacion=new_municipio_info["Poblacion"],
-                dep_id=new_municipio_info["dep_id"],
-                prd_id=new_municipio_info["prd_id"],
+        if new_usuario_info["usr_id"]:
+            update_result = self.usuario_date.actualizar_usuario(
+                usr_id=new_usuario_info["usr_id"],
+                nombre_alternativo=new_usuario_info["nombre_alternativo"],
+                clave=new_usuario_info["clave"],
+                nivel_usuario=new_usuario_info["nivel_usuario"]
                 
             )
 
